@@ -1,22 +1,32 @@
-[README.md](https://github.com/user-attachments/files/28987476/README.md)
-# Maverick Journey Prototype V4
+[README.md](https://github.com/user-attachments/files/28987732/README.md)
+# Maverick Journey Prototype V5
 
-A clickable pitch prototype with both trainer and client sides.
+Full trainer + client demo prototype.
 
 ## Includes
-- Trainer Coach OS dashboard
-- AI Assistant
-- 10 demo clients
+### Trainer side
+- Coach OS
+- 10-client roster
 - Client profile
-- Client Portal dashboard
-- Slack mobile/client/trainer experience
+- AI assistant
+- Slack command layer
 - Reports
 - Reminders
-- Tools and integrations
-- Pitch view with pricing
+- Tools/Admin
+- Pitch flow
 
-## Deploy on Vercel
-- Framework: Vite
-- Build command: npm run build
-- Output directory: dist
-- Install command: npm install
+### Client side
+- Client login-style dashboard
+- Daily logging
+- Nutrition dashboard
+- Meal photo examples
+- Progress photo timeline
+- Client messages
+- Client reminders
+- Weekly client report
+
+## Vercel Settings
+Framework: Vite
+Build command: npm run build
+Output directory: dist
+Install command: npm install

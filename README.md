@@ -1,13 +1,14 @@
-[README.md](https://github.com/user-attachments/files/28987374/README.md)
-# Maverick Journey Prototype V3
+[README.md](https://github.com/user-attachments/files/28987476/README.md)
+# Maverick Journey Prototype V4
 
-A clickable, pitch-ready visual prototype for Maverick Journey.
+A clickable pitch prototype with both trainer and client sides.
 
 ## Includes
-- Coach OS dashboard
+- Trainer Coach OS dashboard
 - AI Assistant
-- 10-client management screen
+- 10 demo clients
 - Client profile
+- Client Portal dashboard
 - Slack mobile/client/trainer experience
 - Reports
 - Reminders

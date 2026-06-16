@@ -107,6 +107,7 @@
       <button data-page="assistant">✦ AI Assistant <span class="badge">Live</span></button>
       <button data-page="clients">☷ 10 Clients</button>
       <button data-page="profile">◉ Client Profile</button>
+      <button data-page="clientportal">◍ Client Portal</button>
       <button data-page="slack"># Slack Experience</button>
       <button data-page="reports">▥ Reports</button>
       <button data-page="reminders">◌ Reminders <span class="badge">18</span></button>
@@ -287,6 +288,121 @@
       </div>
     </section>
 
+
+    <section id="clientportal" class="page">
+      <div class="grid twoCol">
+        <div class="card">
+          <div class="clientTop">
+            <div class="clientAvatar">S</div>
+            <div>
+              <h2 style="margin:0">Sarah's Journey Dashboard</h2>
+              <p class="muted" style="margin:2px 0">Client-facing portal · Simple, motivating, and easy to understand.</p>
+            </div>
+            <span class="pill green" style="margin-left:auto">Week 6 / 12</span>
+          </div>
+          <div class="grid miniCharts" style="grid-template-columns:repeat(4,1fr)">
+            <div class="card chartMini"><h5>Weight</h5><b>168.2</b><span class="delta">-4.8 lb</span><div class="bars"><span style="height:88%"></span><span style="height:76%"></span><span style="height:68%"></span><span style="height:58%"></span></div></div>
+            <div class="card chartMini"><h5>Check-in streak</h5><b>6 days</b><span class="delta">Best month</span><div class="bars"><span style="height:40%"></span><span style="height:62%"></span><span style="height:76%"></span><span style="height:94%"></span></div></div>
+            <div class="card chartMini"><h5>Water</h5><b>78 oz</b><span class="delta">Goal hit</span><div class="bars"><span style="height:44%"></span><span style="height:56%"></span><span style="height:78%"></span><span style="height:86%"></span></div></div>
+            <div class="card chartMini"><h5>Sleep</h5><b>7.1h</b><span class="delta">↑ .6</span><div class="bars"><span style="height:52%"></span><span style="height:58%"></span><span style="height:70%"></span><span style="height:82%"></span></div></div>
+          </div>
+
+          <div class="card" style="margin-top:16px">
+            <div class="panelTitle"><h4>Today's Progress</h4><span class="pill purple">Client view</span></div>
+            <div class="demoFlow">
+              <div class="flowStep">⚖️<br><b>Weight</b><br><small>168.2 lbs</small></div>
+              <div class="flowStep">🍽️<br><b>Meals</b><br><small>2 logged</small></div>
+              <div class="flowStep">💧<br><b>Water</b><br><small>78 / 80 oz</small></div>
+              <div class="flowStep">💪<br><b>Workout</b><br><small>Upper body</small></div>
+              <div class="flowStep">🙂<br><b>Mood</b><br><small>8 / 10</small></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:16px">
+            <div class="panelTitle"><h4>Nutrition Snapshot</h4><span class="pill green">Logged from Slack</span></div>
+            <div class="grid threeCol">
+              <div><div class="bigNumber">1,842</div><p class="muted">Calories logged</p></div>
+              <div><div class="bigNumber">142g</div><p class="muted">Protein</p></div>
+              <div><div class="bigNumber">92%</div><p class="muted">Nutrition consistency</p></div>
+            </div>
+            <div class="bars" style="height:120px">
+              <span style="height:65%"></span><span style="height:82%"></span><span style="height:72%"></span><span style="height:92%"></span><span style="height:78%"></span><span style="height:86%"></span><span style="height:74%"></span>
+            </div>
+            <p class="muted"><strong>AI note:</strong> Protein is on track today. Water is close to goal. Dinner should focus on lean protein and vegetables to finish strong.</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <div class="panelTitle"><h4>Upload Center</h4><span class="pill">Photos + Food</span></div>
+            <div class="grid threeCol">
+              <div class="card" style="min-height:150px;display:grid;place-items:center;text-align:center">
+                <div><div style="font-size:34px">📸</div><strong>Progress Photo</strong><br><small class="muted">Front / side / back</small></div>
+              </div>
+              <div class="card" style="min-height:150px;display:grid;place-items:center;text-align:center">
+                <div><div style="font-size:34px">🍽️</div><strong>Meal Photo</strong><br><small class="muted">AI organizes meal log</small></div>
+              </div>
+              <div class="card" style="min-height:150px;display:grid;place-items:center;text-align:center">
+                <div><div style="font-size:34px">🧾</div><strong>Health Docs</strong><br><small class="muted">Bloodwork later</small></div>
+              </div>
+            </div>
+            <p class="muted">Clients can upload from Slack or from this portal. The trainer sees everything organized automatically.</p>
+          </div>
+
+          <div class="card">
+            <div class="panelTitle"><h4>Progress Photo Timeline</h4><span class="pill purple">Visual journey</span></div>
+            <div class="grid threeCol">
+              <div class="card" style="height:180px;background:linear-gradient(135deg,#182849,#0c1328);display:grid;place-items:center;text-align:center"><div>Week 1<br><span class="muted">Baseline</span></div></div>
+              <div class="card" style="height:180px;background:linear-gradient(135deg,#1b315b,#0c1328);display:grid;place-items:center;text-align:center"><div>Week 4<br><span class="muted">Improved</span></div></div>
+              <div class="card" style="height:180px;background:linear-gradient(135deg,#20467a,#0c1328);display:grid;place-items:center;text-align:center"><div>Week 6<br><span class="muted">Current</span></div></div>
+            </div>
+            <p class="muted"><strong>AI photo guidance:</strong> Same lighting and angle detected. Great comparison quality.</p>
+          </div>
+
+          <div class="card">
+            <div class="panelTitle"><h4>Upcoming Reminders</h4><span class="pill yellow">Client tasks</span></div>
+            <div class="list">
+              <div class="row"><div><strong>Tomorrow 8 AM</strong><small>Morning weigh-in and water check.</small></div><span class="pill">Slack</span></div>
+              <div class="row"><div><strong>Friday 8 AM</strong><small>Progress photos due.</small></div><span class="pill purple">Photo</span></div>
+              <div class="row"><div><strong>Sunday 7 PM</strong><small>Weekly reflection: wins, struggles, schedule.</small></div><span class="pill green">Check-in</span></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="panelTitle"><h4>AI Client Encouragement</h4><span class="pill green">Trainer-approved</span></div>
+            <p>“Sarah, you’re having a strong week. Your sleep improved, your protein is consistent, and you’re close to your water goal today. Keep it simple tonight and finish strong.”</p>
+            <small class="muted">This keeps the client motivated while the trainer stays in control.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid twoCol" style="margin-top:16px">
+        <div class="card">
+          <div class="panelTitle"><h4>Client Weekly Summary</h4><span class="pill green">Shareable</span></div>
+          <table class="table">
+            <thead><tr><th>Category</th><th>This Week</th><th>Goal</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Workouts</td><td>4 completed</td><td>5</td><td><span class="pill yellow">Close</span></td></tr>
+              <tr><td>Water</td><td>5/7 days hit</td><td>7/7</td><td><span class="pill green">Improving</span></td></tr>
+              <tr><td>Sleep</td><td>7.1h avg</td><td>7h</td><td><span class="pill green">On goal</span></td></tr>
+              <tr><td>Nutrition</td><td>92%</td><td>85%+</td><td><span class="pill green">On track</span></td></tr>
+              <tr><td>Weight</td><td>-1.2 lb</td><td>Steady loss</td><td><span class="pill green">On track</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="panelTitle"><h4>Why clients will like this</h4><span class="pill purple">Value</span></div>
+          <div class="list">
+            <div class="row"><div><strong>They see progress clearly</strong><small>Weight, photos, habits, sleep, water, workouts, and nutrition in one place.</small></div></div>
+            <div class="row"><div><strong>They do not need to learn a complicated app</strong><small>They can still use Slack for most logging.</small></div></div>
+            <div class="row"><div><strong>They feel supported</strong><small>AI reminders and trainer-approved encouragement keep them engaged.</small></div></div>
+            <div class="row"><div><strong>They understand the journey</strong><small>The dashboard shows wins, next steps, and what to focus on.</small></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
     <section id="slack" class="page">
       <div class="grid twoCol">
         <div class="phoneWrap">
@@ -419,6 +535,7 @@ const titles={
  assistant:["AI Assistant","Ask Maverick Journey anything about clients, reminders, reports, and follow-ups."],
  clients:["Client Management","10 demo clients with risk levels, habits, and AI-prioritized attention."],
  profile:["Client Profile","A full client timeline with progress, memory, reminders, and coaching insights."],
+ clientportal:["Client Portal","The client-side dashboard with progress, nutrition, uploads, reminders, and AI feedback."],
  slack:["Slack Experience","Show trainers exactly how clients and coaches interact with the AI on mobile."],
  reports:["Reports","Weekly summaries, client-facing updates, and trainer-only insights."],
  reminders:["Reminders","Automated follow-ups for check-ins, photos, meals, water, sleep, and workouts."],

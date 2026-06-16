@@ -1,7 +1,0 @@
-{
-  "scripts": {
-    "build": "rm -rf dist && mkdir -p dist/slack dist/client && cp index.html dist/index.html && cp slack/index.html dist/slack/index.html && cp client/index.html dist/client/index.html"
-  },
-  "dependencies": {},
-  "devDependencies": {}
-}

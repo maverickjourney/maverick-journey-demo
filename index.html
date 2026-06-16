@@ -1,327 +1,66 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Maverick Journey | Full Trainer + Client Demo</title>
-<style>
-:root{
-  --bg:#040814;--panel:#0b1225;--panel2:#0f1a34;--line:#243656;--soft:#101b32;
-  --text:#f4f7ff;--muted:#91a0bf;--blue:#4ea3ff;--cyan:#21e6ff;--purple:#9b5cff;
-  --green:#2be68e;--yellow:#ffd166;--red:#ff5c7c;--orange:#ff9f43;
-}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:
-radial-gradient(circle at 50% -10%,rgba(62,116,255,.32),transparent 36%),
-radial-gradient(circle at 90% 10%,rgba(155,92,255,.16),transparent 30%),
-linear-gradient(180deg,#050916 0%,#040814 100%);color:var(--text);}
-button,input,textarea,select{font:inherit}
-.app{display:grid;grid-template-columns:286px 1fr;min-height:100vh}
-.sidebar{height:100vh;position:sticky;top:0;padding:20px 16px;border-right:1px solid rgba(126,160,255,.18);background:rgba(3,6,13,.82);backdrop-filter:blur(20px)}
-.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-.logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#102a66,#1b123b);border:1px solid rgba(78,163,255,.5);box-shadow:0 0 24px rgba(78,163,255,.35);font-weight:950;color:#cbeeff;font-size:25px;letter-spacing:-5px;padding-right:4px}
-.brand h1{margin:0;font-size:16px;letter-spacing:.09em;text-transform:uppercase}.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}
-.roleSwitch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
-.roleSwitch button{border:1px solid rgba(126,160,255,.22);background:#091225;color:#cbd7f1;border-radius:12px;padding:10px;cursor:pointer}
-.roleSwitch button.active{background:linear-gradient(135deg,rgba(78,163,255,.28),rgba(155,92,255,.18));color:#fff;border-color:rgba(78,163,255,.55)}
-.navTitle{margin:18px 10px 8px;color:#617194;text-transform:uppercase;letter-spacing:.14em;font-size:11px}
-.nav{display:flex;flex-direction:column;gap:7px}
-.nav button{width:100%;display:flex;align-items:center;gap:10px;text-align:left;border:1px solid transparent;background:transparent;color:#cbd7f1;border-radius:13px;padding:11px 12px;cursor:pointer}
-.nav button:hover,.nav button.active{background:linear-gradient(90deg,rgba(78,163,255,.18),rgba(155,92,255,.1));border-color:rgba(126,160,255,.28);color:#fff}
-.badge{margin-left:auto;border-radius:99px;padding:2px 7px;font-size:11px;border:1px solid rgba(155,92,255,.45);color:#d9c8ff;background:rgba(155,92,255,.18)}
-.sideCard{position:absolute;left:16px;right:16px;bottom:18px;border:1px solid rgba(126,160,255,.2);background:linear-gradient(180deg,rgba(15,26,52,.92),rgba(7,12,24,.92));border-radius:17px;padding:14px}
-.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#f0b36e,#6b3d22);font-weight:900}
-.sideCoach{display:flex;align-items:center;gap:10px}.sideCoach small{color:var(--muted)}
-.bar{height:7px;background:#17243d;border-radius:99px;overflow:hidden;margin:12px 0 6px}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:99px}
-main{padding:22px 22px 96px;overflow:hidden}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
-.top h2{margin:0;font-size:24px;letter-spacing:-.03em}.top p{margin:5px 0 0;color:var(--muted)}
-.topTools{display:flex;align-items:center;gap:10px}.search{width:340px;background:rgba(8,14,28,.88);border:1px solid rgba(126,160,255,.24);border-radius:13px;color:#fff;padding:12px 14px;outline:none}.icon{width:43px;height:43px;border-radius:13px;border:1px solid rgba(126,160,255,.24);background:#0a1428;color:#dce8ff;cursor:pointer}
-.page{display:none}.page.active{display:block}
-.grid{display:grid;gap:16px}.cols2{grid-template-columns:1.1fr .9fr}.cols3{grid-template-columns:repeat(3,1fr)}.cols4{grid-template-columns:repeat(4,1fr)}.cols5{grid-template-columns:repeat(5,1fr)}
-.card{border:1px solid rgba(126,160,255,.2);background:linear-gradient(180deg,rgba(13,23,46,.94),rgba(7,12,25,.94));border-radius:18px;padding:16px;box-shadow:0 20px 70px rgba(0,0,0,.22)}
-.card.glow{box-shadow:0 0 0 1px rgba(78,163,255,.12),0 0 60px rgba(78,163,255,.12)}
-.panelTitle{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.panelTitle h3,.panelTitle h4{margin:0;text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:#d7e4ff}.panelTitle a{color:var(--blue);font-size:12px;cursor:pointer}
-.metric{min-height:116px;position:relative;overflow:hidden}.metric:after{content:"";position:absolute;right:-35px;top:-45px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(78,163,255,.25),transparent 70%)}
-.metric .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}.metric .num{font-size:33px;font-weight:900;margin-top:8px}.delta{font-size:12px;color:var(--green);margin-left:6px}.delta.red{color:var(--red)}.delta.yellow{color:var(--yellow)}
-.pill{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:4px 8px;border:1px solid rgba(126,160,255,.25);background:#101b33;color:#d9e5ff;font-size:11px}.pill.green{border-color:rgba(43,230,142,.45);color:#9effcd}.pill.red{border-color:rgba(255,92,124,.45);color:#ff9aac}.pill.yellow{border-color:rgba(255,209,102,.45);color:#ffe3a3}.pill.purple{border-color:rgba(155,92,255,.45);color:#dbc8ff}.pill.blue{border-color:rgba(78,163,255,.45);color:#bfe3ff}
-.muted{color:var(--muted)}.success{color:var(--green)}.danger{color:var(--red)}.warning{color:var(--yellow)}.accent{color:var(--cyan)}
-.hero{min-height:420px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}.hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(78,163,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(78,163,255,.055) 1px,transparent 1px);background-size:30px 30px;mask-image:radial-gradient(circle at center,black 0%,transparent 70%)}
-.orb{position:relative;margin:auto;width:200px;height:200px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(78,163,255,.45);background:radial-gradient(circle,rgba(78,163,255,.78),rgba(17,36,83,.5) 42%,transparent 68%);box-shadow:0 0 80px rgba(78,163,255,.48), inset 0 0 45px rgba(33,230,255,.2)}
-.orb:before,.orb:after{content:"";position:absolute;inset:-25px;border-radius:50%;border:1px solid rgba(33,230,255,.34);animation:spin 18s linear infinite}.orb:after{inset:-47px;border-color:rgba(155,92,255,.26);animation-duration:28s}@keyframes spin{to{transform:rotate(360deg)}}.orb b{font-size:60px;letter-spacing:-8px}
-.hero h1{font-size:35px;margin:25px 0 8px}.hero p{color:var(--muted);margin:0}.quick{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px}.quick button{border:1px solid rgba(78,163,255,.28);background:#10203d;color:#e8f2ff;border-radius:13px;padding:12px 14px;cursor:pointer}
-.list{display:flex;flex-direction:column;gap:10px}.row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:11px;border:1px solid rgba(126,160,255,.12);background:rgba(255,255,255,.025);border-radius:13px}.row strong{font-size:13px}.row small{display:block;color:var(--muted);margin-top:3px}
-.table{width:100%;border-collapse:collapse}.table th,.table td{padding:12px 10px;border-bottom:1px solid rgba(126,160,255,.12);text-align:left;font-size:13px}.table th{text-transform:uppercase;color:var(--muted);letter-spacing:.1em;font-size:11px}.table td{color:#e8f0ff}
-.bars{display:flex;align-items:flex-end;gap:6px;height:54px;margin-top:12px}.bars span{flex:1;min-height:10px;border-radius:7px 7px 0 0;background:linear-gradient(180deg,var(--blue),rgba(155,92,255,.72))}
-.clientCard{cursor:pointer;transition:.2s}.clientCard:hover{transform:translateY(-2px);border-color:rgba(78,163,255,.55)}.clientTop{display:flex;align-items:center;gap:10px}.clientAvatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,#21345f,#10182f);border:1px solid rgba(78,163,255,.28)}.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 12px currentColor}.dot.red{background:var(--red)}.dot.yellow{background:var(--yellow)}.dot.purple{background:var(--purple)}
-.progress{height:7px;background:#16243c;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--cyan))}.progress.red span{background:linear-gradient(90deg,var(--red),#ffa6b6)}.progress.yellow span{background:linear-gradient(90deg,var(--yellow),var(--orange))}
-.timeline{position:relative;padding-left:22px}.timeline:before{content:"";position:absolute;left:7px;top:5px;bottom:5px;width:1px;background:rgba(126,160,255,.2)}.event{position:relative;margin:0 0 14px}.event:before{content:"";position:absolute;left:-20px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 12px var(--blue)}
-.phoneWrap{display:grid;place-items:center}.phone{width:335px;height:690px;border:9px solid #111;border-radius:44px;background:linear-gradient(180deg,#071126,#030712);box-shadow:0 30px 90px rgba(0,0,0,.65),0 0 0 1px #333 inset;padding:18px;overflow:hidden}.phoneTop{display:flex;justify-content:space-between;margin-bottom:10px}.phoneTitle{border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);padding:10px 0;margin-bottom:8px}.chatMsg{display:flex;gap:8px;margin:9px 0}.bubble{font-size:12.5px;line-height:1.35;border:1px solid rgba(126,160,255,.18);background:#111b32;border-radius:14px;padding:10px}.bubble.ai{background:linear-gradient(180deg,#10234a,#0b1832);border-color:rgba(78,163,255,.36)}.bubble.user{background:#18223b}.slackActions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.slackActions button{border:1px solid rgba(155,92,255,.35);background:#0e1730;color:#dfe9ff;border-radius:10px;padding:8px 4px;font-size:10.5px}
-.big{font-size:42px;font-weight:950;letter-spacing:-.06em}.uploadBox{min-height:170px;display:grid;place-items:center;text-align:center;border-style:dashed;background:rgba(255,255,255,.018)}.foodPhoto{height:118px;border-radius:14px;background:linear-gradient(135deg,#5d3d1b,#1b392b 45%,#d6d2a7);border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;color:#fff;text-shadow:0 2px 8px #000}.photoSlot{height:190px;border-radius:15px;background:linear-gradient(135deg,#1a294a,#0c1328);border:1px solid rgba(126,160,255,.16);display:grid;place-items:center;text-align:center}
-.command{position:fixed;left:325px;right:34px;bottom:22px;display:flex;gap:12px;align-items:center;border:1px solid rgba(155,92,255,.45);background:rgba(8,13,28,.92);backdrop-filter:blur(18px);border-radius:18px;padding:12px;box-shadow:0 0 45px rgba(155,92,255,.18);z-index:20}.voice{width:45px;height:45px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#142a68,#27184d);border:1px solid rgba(78,163,255,.5)}.command input{flex:1;border:0;background:transparent;color:#fff;outline:0}.send{border:0;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--purple));color:white;padding:12px 15px;cursor:pointer}
-@media(max-width:1250px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.sideCard{position:static;margin-top:20px}.cols2,.cols3,.cols4,.cols5{grid-template-columns:1fr}.command{left:20px;right:20px}.search{width:180px}}
-</style>
-</head>
-<body>
-<div class="app">
-  <aside class="sidebar">
-    <div class="brand"><div class="logo">M</div><div><h1>Maverick Journey</h1><p>Trainer + Client Demo</p></div></div>
-    <div class="roleSwitch"><button class="active" onclick="setMode('trainer')">Trainer View</button><button onclick="setMode('client')">Client View</button></div>
-    <div class="navTitle">Trainer Command Center</div>
-    <div class="nav trainerNav">
-      <button class="active" data-page="trainer-home">⌂ Coach OS</button>
-      <button data-page="trainer-clients">☷ 10 Clients</button>
-      <button data-page="trainer-profile">◉ Client Profile</button>
-      <button data-page="trainer-ai">✦ AI Assistant <span class="badge">Live</span></button>
-      <button data-page="trainer-slack"># Slack Command</button>
-      <button data-page="trainer-reports">▥ Reports</button>
-      <button data-page="trainer-reminders">◌ Reminders <span class="badge">18</span></button>
-      <button data-page="trainer-admin">⚙ Tools + Admin</button>
-      <button data-page="pitch">◈ Pitch Flow</button>
-    </div>
-    <div class="navTitle clientNavTitle" style="display:none">Client Experience</div>
-    <div class="nav clientNav" style="display:none">
-      <button data-page="client-home">⌂ My Journey</button>
-      <button data-page="client-log">＋ Log Today</button>
-      <button data-page="client-nutrition">🍽 Nutrition</button>
-      <button data-page="client-photos">📸 Progress Photos</button>
-      <button data-page="client-messages">💬 Messages</button>
-      <button data-page="client-reminders">◌ My Reminders</button>
-      <button data-page="client-report">▥ Weekly Report</button>
-    </div>
-    <div class="sideCard">
-      <div class="sideCoach"><div class="avatar">A</div><div><strong id="sideName">Coach Alex</strong><br><small id="sideSub">Maverick Performance</small></div></div>
-      <div class="bar"><span></span></div><small class="muted" id="sideUsage">10 clients · Pro Beta Demo</small>
-    </div>
-  </aside>
-
-  <main>
-    <div class="top">
-      <div><h2 id="title">Good morning, Coach 👋</h2><p id="subtitle">Your AI command center is tracking 10 clients, 18 reminders, and 4 messages waiting for approval.</p></div>
-      <div class="topTools"><input class="search" placeholder="Search clients, logs, notes..." /><button class="icon">＋</button><button class="icon">🔔</button><button class="icon">?</button></div>
-    </div>
-
-    <!-- TRAINER HOME -->
-    <section id="trainer-home" class="page active">
-      <div class="grid" style="grid-template-columns:260px 1fr 330px">
-        <div class="grid">
-          <div class="card metric"><div class="label">Active Clients</div><div class="num">10 <span class="delta">demo</span></div><div class="bars"><span style="height:35%"></span><span style="height:60%"></span><span style="height:75%"></span><span style="height:68%"></span></div></div>
-          <div class="card metric"><div class="label">Check-ins Today</div><div class="num">7 <span class="delta">+18%</span></div><div class="bars"><span style="height:45%"></span><span style="height:54%"></span><span style="height:65%"></span><span style="height:82%"></span></div></div>
-          <div class="card metric"><div class="label">At Risk</div><div class="num">3 <span class="delta red">action</span></div><div class="bars"><span style="height:22%"></span><span style="height:55%"></span><span style="height:38%"></span><span style="height:68%"></span></div></div>
-          <div class="card metric"><div class="label">Reminders Due</div><div class="num">18 <span class="delta yellow">24h</span></div><div class="bars"><span style="height:50%"></span><span style="height:35%"></span><span style="height:72%"></span><span style="height:61%"></span></div></div>
-        </div>
-        <div class="card hero glow">
-          <div>
-            <div class="orb"><b>M</b></div>
-            <h1>Maverick Journey Coach OS</h1>
-            <p>Clients talk through Slack. AI organizes. Trainers coach from one command center.</p>
-            <div class="quick">
-              <button onclick="go('trainer-clients')">Show clients needing attention</button>
-              <button onclick="go('trainer-slack')">Show Slack workflow</button>
-              <button onclick="go('client-home');setMode('client')">Show client login view</button>
-              <button onclick="go('trainer-ai')">Ask Maverick Council</button>
-            </div>
-          </div>
-        </div>
-        <div class="grid">
-          <div class="card"><div class="panelTitle"><h4>Priority Alerts</h4><a>View all</a></div><div class="list">
-            <div class="row"><div><strong>Mike T. low sleep</strong><small>5.2h average · 3 days</small></div><span class="pill red">High</span></div>
-            <div class="row"><div><strong>Jessica missed check-ins</strong><small>2 days without response</small></div><span class="pill yellow">Risk</span></div>
-            <div class="row"><div><strong>Anthony knee soreness</strong><small>Workout adjustment suggested</small></div><span class="pill red">Flag</span></div>
-            <div class="row"><div><strong>Sarah progress photo due</strong><small>Friday morning reminder ready</small></div><span class="pill">Due</span></div>
-          </div></div>
-          <div class="card"><div class="panelTitle"><h4>AI Drafts Ready</h4><span class="pill purple">4</span></div><div class="list">
-            <div class="row"><div><strong>Reset message</strong><small>Jessica · soft accountability</small></div><span class="pill purple">Approve</span></div>
-            <div class="row"><div><strong>Recovery check</strong><small>Mike · direct tone</small></div><span class="pill purple">Approve</span></div>
-            <div class="row"><div><strong>Celebrate streak</strong><small>Chris · 5-day check-in streak</small></div><span class="pill green">Send</span></div>
-          </div></div>
-        </div>
-      </div>
-      <div class="grid cols4" style="margin-top:16px">
-        <div class="card"><div class="panelTitle"><h4>Compliance</h4><span class="pill green">87%</span></div><div class="big">87%</div><div class="bars"><span style="height:60%"></span><span style="height:72%"></span><span style="height:80%"></span><span style="height:92%"></span></div></div>
-        <div class="card"><div class="panelTitle"><h4>Avg Weight Loss</h4><span class="pill green">30 days</span></div><div class="big">-8.4</div><p class="muted">Total across active weight-loss clients.</p></div>
-        <div class="card"><div class="panelTitle"><h4>Client Momentum</h4><span class="pill">Score</span></div><div class="big">78</div><p class="muted">Combined check-ins, sleep, meals, water, workouts.</p></div>
-        <div class="card"><div class="panelTitle"><h4>Retention Risk</h4><span class="pill red">3</span></div><div class="big danger">3</div><p class="muted">Clients likely to fall off without follow-up.</p></div>
-      </div>
-      <div class="grid cols2" style="margin-top:16px">
-        <div class="card"><div class="panelTitle"><h4>Clients Needing Attention</h4><a onclick="go('trainer-clients')">Open clients</a></div><table class="table"><thead><tr><th>Client</th><th>Signal</th><th>AI Suggestion</th><th>Status</th></tr></thead><tbody><tr><td>Mike Thompson</td><td>Low sleep</td><td>Ask about recovery and adjust training</td><td><span class="pill red">Urgent</span></td></tr><tr><td>Jessica Lee</td><td>Missed check-ins</td><td>Send soft reset message</td><td><span class="pill yellow">Risk</span></td></tr><tr><td>Anthony Vega</td><td>Knee soreness</td><td>Modify leg day</td><td><span class="pill red">Review</span></td></tr><tr><td>David Rodriguez</td><td>Low water</td><td>Send hydration reminder</td><td><span class="pill">Reminder</span></td></tr></tbody></table></div>
-        <div class="card"><div class="panelTitle"><h4>AI Memory</h4><span class="pill purple">Personalized</span></div><div class="list"><div class="row"><div><strong>Sarah falls off on weekends.</strong><small>Compliance drops 32% on Sat/Sun. Friday reminder helps.</small></div></div><div class="row"><div><strong>Mike responds to direct tone.</strong><small>Short action-based messages get fastest response.</small></div></div><div class="row"><div><strong>Jessica needs encouragement, not pressure.</strong><small>Soft reset language improves check-in completion.</small></div></div><div class="row"><div><strong>Chris likes performance-based wins.</strong><small>Highlight strength and streaks, not just weight.</small></div></div></div></div>
-      </div>
-    </section>
-
-    <!-- CLIENTS -->
-    <section id="trainer-clients" class="page">
-      <div class="grid cols5" id="clientGrid"></div>
-      <div class="grid cols2" style="margin-top:16px">
-        <div class="card"><div class="panelTitle"><h4>10-Client Roster</h4><span class="pill blue">Trainer view</span></div><table class="table" id="clientTable"></table></div>
-        <div class="card"><div class="panelTitle"><h4>What the AI ranks</h4><span class="pill purple">Client signals</span></div><div class="list"><div class="row"><div><strong>Missed check-ins</strong><small>Detects people falling off before they cancel.</small></div><span class="pill red">Risk</span></div><div class="row"><div><strong>Low sleep / low energy</strong><small>Flags recovery issues for training adjustments.</small></div><span class="pill yellow">Health</span></div><div class="row"><div><strong>Nutrition inconsistency</strong><small>Finds meal gaps, low protein, missed photos.</small></div><span class="pill">Food</span></div><div class="row"><div><strong>Positive momentum</strong><small>Finds wins worth celebrating to increase retention.</small></div><span class="pill green">Win</span></div></div></div>
-      </div>
-    </section>
-
-    <!-- TRAINER PROFILE -->
-    <section id="trainer-profile" class="page">
-      <div class="grid cols2">
-        <div class="card"><div class="clientTop"><div class="clientAvatar">S</div><div><h2 style="margin:0">Sarah Kim</h2><p class="muted" style="margin:2px 0">Goal: lose 18 lb · 12-week lifestyle program · Week 6</p></div><span class="pill green" style="margin-left:auto">On Track</span></div>
-          <div class="grid cols4" style="margin-top:16px"><div class="card"><h4>Weight</h4><div class="big">168.2</div><span class="delta">-4.8 lb</span></div><div class="card"><h4>Sleep</h4><div class="big">7.1h</div><span class="delta">↑ .6</span></div><div class="card"><h4>Nutrition</h4><div class="big">92%</div><span class="delta">on track</span></div><div class="card"><h4>Workouts</h4><div class="big">4/5</div><span class="delta yellow">close</span></div></div>
-          <div class="card" style="margin-top:16px"><div class="panelTitle"><h4>Trainer Timeline</h4><span class="pill">Last 7 days</span></div><div class="timeline"><div class="event"><strong>Today:</strong> Breakfast photo uploaded, protein on track, upper body complete.</div><div class="event"><strong>Yesterday:</strong> Sleep improved to 7h 12m. AI removed low-sleep alert.</div><div class="event"><strong>Monday:</strong> Progress photo uploaded. Lighting matched prior week.</div><div class="event"><strong>Saturday:</strong> Missed dinner log. AI added weekend pattern memory.</div></div></div>
-          <div class="card" style="margin-top:16px"><div class="panelTitle"><h4>Meal Photo Log</h4><span class="pill green">AI organized</span></div><div class="grid cols3"><div><div class="foodPhoto">Breakfast bowl</div><p><strong>Breakfast</strong><br><span class="muted">Eggs, oats, berries · 38g protein</span></p></div><div><div class="foodPhoto">Chicken plate</div><p><strong>Lunch</strong><br><span class="muted">Chicken, rice, broccoli · 42g protein</span></p></div><div><div class="foodPhoto">Dinner pending</div><p><strong>Dinner</strong><br><span class="muted">Reminder scheduled 7 PM</span></p></div></div></div>
-        </div>
-        <div class="grid">
-          <div class="card"><div class="panelTitle"><h4>AI Trainer Brief</h4><span class="pill purple">Generated</span></div><p><strong>Summary:</strong> Sarah is progressing well. Weekday compliance is strong, sleep is improving, and nutrition is above goal. Main focus is weekend consistency.</p><p class="muted"><strong>Suggested message:</strong> “Sarah, strong week so far. Let’s keep the weekend simple: one protein anchor meal, water before dinner, and a quick Sunday reflection.”</p></div>
-          <div class="card"><div class="panelTitle"><h4>Trainer Controls</h4><span class="pill">Actions</span></div><div class="list"><div class="row"><div><strong>Send message through Slack</strong><small>AI drafts with your tone.</small></div><span class="pill purple">Draft</span></div><div class="row"><div><strong>Set recurring reminder</strong><small>Friday progress photo reminder.</small></div><span class="pill">Set</span></div><div class="row"><div><strong>Adjust program</strong><small>Based on sleep and workout completion.</small></div><span class="pill yellow">Review</span></div><div class="row"><div><strong>Generate weekly report</strong><small>Client-facing + trainer-only versions.</small></div><span class="pill green">Generate</span></div></div></div>
-          <div class="card"><div class="panelTitle"><h4>Progress Photos</h4><span class="pill green">3 uploads</span></div><div class="grid cols3"><div class="photoSlot">Week 1<br><span class="muted">Front</span></div><div class="photoSlot">Week 4<br><span class="muted">Side</span></div><div class="photoSlot">Week 6<br><span class="muted">Current</span></div></div><p class="muted">AI note: same lighting and angle detected. Good comparison quality.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- AI -->
-    <section id="trainer-ai" class="page">
-      <div class="grid cols2">
-        <div class="card"><div class="panelTitle"><h4>Trainer AI Conversation</h4><span class="pill green">Portal + Slack</span></div><div class="timeline"><div class="event"><strong>Coach:</strong> Who should I check on today?</div><div class="event"><strong class="accent">AI:</strong> Mike, Jessica, Anthony, and David. Mike has low sleep, Jessica missed check-ins, Anthony reported knee soreness, David is below water goal.</div><div class="event"><strong>Coach:</strong> Draft messages in their style.</div><div class="event"><strong class="accent">AI:</strong> Created 4 drafts. Mike = direct. Jessica = gentle reset. Anthony = safety-first. David = short hydration nudge.</div><div class="event"><strong>Coach:</strong> What did I promise this week?</div><div class="event"><strong class="accent">AI:</strong> You promised Mike a modified leg day, Sarah a weekend strategy, and Chris a new upper-body progression.</div></div></div>
-        <div class="card"><div class="panelTitle"><h4>AI Abilities</h4><span class="pill purple">Pitch these</span></div><div class="list"><div class="row"><div><strong>Natural language client search</strong><small>“Show me clients with low sleep this week.”</small></div></div><div class="row"><div><strong>AI message drafting</strong><small>Uses trainer tone and client motivation style.</small></div></div><div class="row"><div><strong>Promise tracking</strong><small>Remembers what the trainer said they would do.</small></div></div><div class="row"><div><strong>Retention risk alerts</strong><small>Flags clients who may cancel or disengage.</small></div></div><div class="row"><div><strong>Client memory</strong><small>Stores patterns, goals, struggles, communication style.</small></div></div></div></div>
-      </div>
-    </section>
-
-    <!-- SLACK -->
-    <section id="trainer-slack" class="page">
-      <div class="grid cols2">
-        <div class="phoneWrap"><div class="phone"><div class="phoneTop"><strong>9:41</strong><span>5G 🔋</span></div><div class="brand" style="margin-bottom:8px"><div class="logo" style="width:35px;height:35px;font-size:20px">M</div><div><h1>MAVERICK JOURNEY</h1><p>AI Coaching via Slack</p></div></div><div class="phoneTitle"><strong>🔒 sarah-k-coaching-room</strong><br><small class="muted">Private channel · Sarah + Coach + AI</small></div><div class="chatMsg"><div class="clientAvatar">M</div><div class="bubble ai"><strong>Maverick Journey AI</strong><br>Good morning Sarah ☀️<br>Daily Check-In:<br>⚖️ Weight<br>😴 Sleep<br>💧 Water<br>💪 Workout<br>🙂 Mood<br><br><button style="width:100%;border-radius:9px;border:1px solid #4ea3ff;background:#17335f;color:#fff;padding:8px">Start Check-In</button></div></div><div class="chatMsg"><div class="clientAvatar">S</div><div class="bubble user">168.2 lbs, slept 7 hrs, water 32 oz so far, upper body later, mood 8/10. Uploading breakfast now.</div></div><div class="chatMsg"><div class="clientAvatar">M</div><div class="bubble ai">Logged ✅ Breakfast photo received. Protein looks on track. You’re close to your water pace — aim for 40 oz by lunch.</div></div><div class="slackActions"><button>Check-In</button><button>Meal</button><button>Photo</button><button>Weight</button><button>Reminder</button><button>Ask AI</button></div></div></div>
-        <div class="grid"><div class="card"><div class="panelTitle"><h4>Trainer Slack Command View</h4><span class="pill blue">What coach sees</span></div><div class="timeline"><div class="event"><strong>Coach:</strong> Show me Sarah today.</div><div class="event"><strong class="accent">AI:</strong> Sarah checked in. Weight 168.2, sleep 7h, water 32 oz so far, upper body planned, mood 8/10. Breakfast photo logged.</div><div class="event"><strong>Coach:</strong> Remind her about dinner protein at 7 PM.</div><div class="event"><strong class="accent">AI:</strong> Reminder scheduled. I’ll send it through Slack and track completion.</div><div class="event"><strong>Coach:</strong> Draft a weekend check-in.</div><div class="event"><strong class="accent">AI:</strong> Draft ready using gentle accountability tone.</div></div></div><div class="card"><div class="panelTitle"><h4>Slack Features</h4><span class="pill purple">MVP</span></div><div class="list"><div class="row"><div><strong>Private coaching rooms</strong><small>One Slack channel per client.</small></div><span class="pill green">MVP</span></div><div class="row"><div><strong>Client DM check-ins</strong><small>For clients who want privacy.</small></div><span class="pill">Later</span></div><div class="row"><div><strong>Trainer command center DM</strong><small>Coach can ask about any client.</small></div><span class="pill purple">Core</span></div></div></div></div>
-      </div>
-    </section>
-
-    <!-- REPORTS -->
-    <section id="trainer-reports" class="page">
-      <div class="grid cols3"><div class="card"><h3>Weekly reports</h3><div class="big">10</div><p class="muted">Generated for all active clients.</p></div><div class="card"><h3>Avg compliance</h3><div class="big">82%</div><p class="muted">Across check-ins, nutrition, workouts, sleep, water.</p></div><div class="card"><h3>Client wins</h3><div class="big success">14</div><p class="muted">Celebration opportunities detected.</p></div></div>
-      <div class="grid cols2" style="margin-top:16px"><div class="card"><div class="panelTitle"><h4>Trainer-only weekly report</h4><span class="pill purple">AI</span></div><p><strong>Overview:</strong> Group compliance improved 6%. The highest retention risk clients are Jessica, Mike, and Anthony.</p><p><strong>Revenue note:</strong> These three clients should receive personal outreach before the weekend. AI drafts are ready.</p><p><strong>Programming note:</strong> Sleep is trending down for 4 clients; consider lighter intensity or recovery reminders.</p></div><div class="card"><div class="panelTitle"><h4>Client-facing report example</h4><span class="pill green">Shareable</span></div><p>“Sarah, great week. You completed 4/5 workouts, improved sleep, and stayed consistent with protein. Your next focus is weekend consistency and hitting water before dinner.”</p><div class="bars" style="height:150px"><span style="height:72%"></span><span style="height:80%"></span><span style="height:90%"></span><span style="height:76%"></span><span style="height:88%"></span></div></div></div>
-    </section>
-
-    <!-- REMINDERS -->
-    <section id="trainer-reminders" class="page">
-      <div class="grid cols3"><div class="card"><h3>Upcoming</h3><div class="big">18</div><p class="muted">Due within 24 hours.</p></div><div class="card"><h3>Completed</h3><div class="big success">42</div><p class="muted">This week.</p></div><div class="card"><h3>Missed</h3><div class="big danger">7</div><p class="muted">Need reset follow-up.</p></div></div>
-      <div class="card" style="margin-top:16px"><div class="panelTitle"><h4>Reminder Engine</h4><span class="pill purple">Automation rules</span></div><table class="table"><thead><tr><th>Client</th><th>Reminder</th><th>Trigger</th><th>Channel</th><th>Status</th></tr></thead><tbody><tr><td>Sarah K.</td><td>Dinner protein reminder</td><td>7 PM today</td><td>Slack</td><td><span class="pill green">Scheduled</span></td></tr><tr><td>Mike T.</td><td>Sleep recovery check</td><td>Low sleep 3 days</td><td>Slack</td><td><span class="pill red">Approval needed</span></td></tr><tr><td>Jessica L.</td><td>Soft reset</td><td>2 missed check-ins</td><td>Slack</td><td><span class="pill yellow">Drafted</span></td></tr><tr><td>Chris J.</td><td>Celebrate streak</td><td>5 check-ins</td><td>Slack</td><td><span class="pill green">Ready</span></td></tr></tbody></table></div>
-    </section>
-
-    <!-- ADMIN -->
-    <section id="trainer-admin" class="page">
-      <div class="grid cols4"><div class="card"><h3>Slack</h3><p class="muted">Connect workspace, create client channels, send reminders.</p><span class="pill green">MVP</span></div><div class="card"><h3>Claude AI</h3><p class="muted">Extract logs, summarize progress, draft messages, detect patterns.</p><span class="pill purple">AI engine</span></div><div class="card"><h3>Supabase</h3><p class="muted">Client database, logs, reminders, photos, auth.</p><span class="pill blue">Backend</span></div><div class="card"><h3>Stripe</h3><p class="muted">Trainer subscriptions and beta pricing.</p><span class="pill">Later</span></div></div>
-      <div class="grid cols2" style="margin-top:16px"><div class="card"><div class="panelTitle"><h4>Trainer Settings</h4><span class="pill">Control</span></div><div class="list"><div class="row"><div><strong>AI tone</strong><small>Strict, friendly, motivational, no-nonsense, concierge.</small></div><span class="pill">Friendly</span></div><div class="row"><div><strong>Approval mode</strong><small>AI drafts messages for trainer approval.</small></div><span class="pill purple">Medium</span></div><div class="row"><div><strong>Check-in questions</strong><small>Weight, sleep, water, workout, mood, soreness.</small></div><span class="pill green">Active</span></div></div></div><div class="card"><div class="panelTitle"><h4>Client Data Types</h4><span class="pill blue">Dashboard</span></div><p class="muted">Food logs, meal photos, water, weight, sleep, mood, soreness, workouts, progress photos, reminders, weekly reports, trainer notes, AI memory, and health documents later.</p></div></div>
-    </section>
-
-    <!-- CLIENT HOME -->
-    <section id="client-home" class="page">
-      <div class="grid cols2">
-        <div class="card"><div class="clientTop"><div class="clientAvatar">S</div><div><h2 style="margin:0">Welcome back, Sarah</h2><p class="muted" style="margin:2px 0">Your Week 6 journey dashboard · Coach Alex</p></div><span class="pill green" style="margin-left:auto">On track</span></div>
-          <div class="grid cols4" style="margin-top:16px"><div class="card"><h4>Weight</h4><div class="big">168.2</div><span class="delta">-4.8 lb</span></div><div class="card"><h4>Streak</h4><div class="big">6</div><span class="delta">days</span></div><div class="card"><h4>Water</h4><div class="big">78</div><span class="delta">oz</span></div><div class="card"><h4>Sleep</h4><div class="big">7.1</div><span class="delta">hrs</span></div></div>
-          <div class="card" style="margin-top:16px"><div class="panelTitle"><h4>Today’s Checklist</h4><span class="pill purple">Client side</span></div><div class="grid cols5"><div class="card" style="text-align:center">⚖️<br><strong>Weight</strong><br><span class="pill green">Done</span></div><div class="card" style="text-align:center">🍽️<br><strong>Meals</strong><br><span class="pill yellow">2/3</span></div><div class="card" style="text-align:center">💧<br><strong>Water</strong><br><span class="pill green">78oz</span></div><div class="card" style="text-align:center">💪<br><strong>Workout</strong><br><span class="pill">Later</span></div><div class="card" style="text-align:center">🙂<br><strong>Mood</strong><br><span class="pill green">8/10</span></div></div></div>
-          <div class="card" style="margin-top:16px"><div class="panelTitle"><h4>My Progress Trend</h4><span class="pill green">30 days</span></div><div class="bars" style="height:180px"><span style="height:88%"></span><span style="height:84%"></span><span style="height:78%"></span><span style="height:72%"></span><span style="height:68%"></span><span style="height:62%"></span><span style="height:58%"></span><span style="height:52%"></span></div><p class="muted">Weight is moving steadily down while sleep and protein are improving.</p></div>
-        </div>
-        <div class="grid"><div class="card"><div class="panelTitle"><h4>AI Encouragement</h4><span class="pill green">Trainer approved</span></div><p>Sarah, strong work this week. Your sleep is improving, your protein is consistent, and you’re almost at your water goal today. Keep dinner simple and finish strong.</p></div><div class="card"><div class="panelTitle"><h4>Upload Center</h4><span class="pill">Photos + Food</span></div><div class="grid cols3"><div class="card uploadBox">📸<br><strong>Progress Photo</strong><br><small class="muted">Front / side / back</small></div><div class="card uploadBox">🍽️<br><strong>Meal Photo</strong><br><small class="muted">AI logs it</small></div><div class="card uploadBox">🧾<br><strong>Health Docs</strong><br><small class="muted">Later phase</small></div></div></div><div class="card"><div class="panelTitle"><h4>Upcoming</h4><span class="pill yellow">3 reminders</span></div><div class="list"><div class="row"><div><strong>Tonight 7 PM</strong><small>Dinner protein reminder.</small></div><span class="pill">Slack</span></div><div class="row"><div><strong>Friday 8 AM</strong><small>Progress photos due.</small></div><span class="pill purple">Photo</span></div><div class="row"><div><strong>Sunday 7 PM</strong><small>Weekly reflection.</small></div><span class="pill green">Check-in</span></div></div></div></div>
-      </div>
-    </section>
-
-    <!-- CLIENT LOG -->
-    <section id="client-log" class="page">
-      <div class="grid cols2">
-        <div class="card"><div class="panelTitle"><h4>Log Today</h4><span class="pill green">Client portal</span></div><div class="grid cols2"><div><label>Weight</label><input class="search" style="width:100%;margin:6px 0 12px" value="168.2 lbs"><label>Sleep</label><input class="search" style="width:100%;margin:6px 0 12px" value="7 hours"><label>Water</label><input class="search" style="width:100%;margin:6px 0 12px" value="78 oz"><label>Mood</label><input class="search" style="width:100%;margin:6px 0 12px" value="8/10"></div><div><label>Workout</label><input class="search" style="width:100%;margin:6px 0 12px" value="Upper body later"><label>Meal notes</label><textarea class="search" style="width:100%;height:120px;margin:6px 0 12px">Breakfast: eggs, oats, berries. Lunch: chicken, rice, broccoli. Dinner pending.</textarea><button class="send" style="width:100%">Submit Check-In</button></div></div></div>
-        <div class="card"><div class="panelTitle"><h4>What AI does after submit</h4><span class="pill purple">Behind the scenes</span></div><div class="timeline"><div class="event">Saves weight, sleep, water, workout, mood, and meals.</div><div class="event">Updates trainer dashboard and client portal charts.</div><div class="event">Checks against goals and creates alerts if needed.</div><div class="event">Drafts trainer summary and follow-up suggestions.</div><div class="event">Sends reminders later through Slack if something is missing.</div></div></div>
-      </div>
-    </section>
-
-    <!-- CLIENT NUTRITION -->
-    <section id="client-nutrition" class="page">
-      <div class="grid cols2"><div class="card"><div class="panelTitle"><h4>Nutrition Dashboard</h4><span class="pill green">Today</span></div><div class="grid cols3"><div><div class="big">1,842</div><p class="muted">Calories logged</p></div><div><div class="big">142g</div><p class="muted">Protein</p></div><div><div class="big">92%</div><p class="muted">Consistency</p></div></div><div class="bars" style="height:160px"><span style="height:68%"></span><span style="height:84%"></span><span style="height:76%"></span><span style="height:92%"></span><span style="height:81%"></span><span style="height:88%"></span></div><p class="muted"><strong>AI note:</strong> Protein is on track. Dinner should include lean protein and vegetables to finish strong.</p></div><div class="card"><div class="panelTitle"><h4>Meal Photo Logs</h4><span class="pill purple">AI organized</span></div><div class="list"><div class="row"><div><strong>Breakfast photo</strong><small>Eggs, oats, berries · estimated 38g protein.</small></div><span class="pill green">Logged</span></div><div class="row"><div><strong>Lunch photo</strong><small>Chicken, rice, broccoli · estimated 42g protein.</small></div><span class="pill green">Logged</span></div><div class="row"><div><strong>Dinner</strong><small>Not logged yet. Reminder at 7 PM.</small></div><span class="pill yellow">Pending</span></div></div></div></div>
-    </section>
-
-    <!-- CLIENT PHOTOS -->
-    <section id="client-photos" class="page">
-      <div class="grid cols2"><div class="card"><div class="panelTitle"><h4>Progress Photo Timeline</h4><span class="pill">Visual journey</span></div><div class="grid cols3"><div class="photoSlot">Week 1<br><span class="muted">Baseline front</span></div><div class="photoSlot">Week 4<br><span class="muted">Side comparison</span></div><div class="photoSlot">Week 6<br><span class="muted">Current upload</span></div></div><p class="muted">AI guidance: same lighting and angle detected. This makes your comparison clearer for Coach Alex.</p></div><div class="card"><div class="panelTitle"><h4>Upload Requirements</h4><span class="pill purple">Consistency</span></div><div class="list"><div class="row"><div><strong>Same lighting</strong><small>Use the same room and light direction.</small></div></div><div class="row"><div><strong>Same angle</strong><small>Front, side, and back views.</small></div></div><div class="row"><div><strong>Same time of day</strong><small>Friday morning before breakfast is recommended.</small></div></div></div></div></div>
-    </section>
-
-    <!-- CLIENT MESSAGES -->
-    <section id="client-messages" class="page">
-      <div class="grid cols2"><div class="phoneWrap"><div class="phone"><div class="phoneTop"><strong>9:41</strong><span>5G 🔋</span></div><div class="phoneTitle"><strong>💬 Maverick Journey AI</strong><br><small class="muted">Connected to Coach Alex</small></div><div class="chatMsg"><div class="clientAvatar">S</div><div class="bubble user">I’m going out to dinner tonight. What should I log?</div></div><div class="chatMsg"><div class="clientAvatar">M</div><div class="bubble ai">Take a photo before eating and send a quick note after: protein, sides, drinks, and how full you felt. I’ll organize it for Coach Alex.</div></div><div class="chatMsg"><div class="clientAvatar">S</div><div class="bubble user">Can you remind me?</div></div><div class="chatMsg"><div class="clientAvatar">M</div><div class="bubble ai">Done ✅ I’ll remind you at 7 PM to send your dinner photo.</div></div></div></div><div class="card"><div class="panelTitle"><h4>Client Messaging</h4><span class="pill green">Easy</span></div><p>Clients do not need to understand a complex dashboard. They can message the AI the way they would text their trainer.</p><div class="list"><div class="row"><div><strong>“I ate chicken and rice.”</strong><small>AI logs food and asks for missing details.</small></div></div><div class="row"><div><strong>“I feel bloated today.”</strong><small>AI logs symptom and flags trainer without medical advice.</small></div></div><div class="row"><div><strong>“Remind me to send photos.”</strong><small>AI creates reminder and updates dashboard.</small></div></div></div></div></div>
-    </section>
-
-    <!-- CLIENT REMINDERS -->
-    <section id="client-reminders" class="page">
-      <div class="card"><div class="panelTitle"><h4>My Reminders</h4><span class="pill yellow">Client side</span></div><table class="table"><thead><tr><th>When</th><th>Reminder</th><th>Why it matters</th><th>Status</th></tr></thead><tbody><tr><td>Tonight 7 PM</td><td>Send dinner photo</td><td>Helps Coach Alex see full day nutrition.</td><td><span class="pill yellow">Upcoming</span></td></tr><tr><td>Tomorrow 8 AM</td><td>Morning weigh-in</td><td>Keeps weekly trend accurate.</td><td><span class="pill">Scheduled</span></td></tr><tr><td>Friday 8 AM</td><td>Progress photos</td><td>Weekly comparison update.</td><td><span class="pill purple">Photo</span></td></tr><tr><td>Sunday 7 PM</td><td>Reflection check-in</td><td>Wins, struggles, schedule, next week plan.</td><td><span class="pill green">Recurring</span></td></tr></tbody></table></div>
-    </section>
-
-    <!-- CLIENT REPORT -->
-    <section id="client-report" class="page">
-      <div class="grid cols2"><div class="card"><div class="panelTitle"><h4>My Weekly Summary</h4><span class="pill green">Shareable</span></div><p><strong>Great week, Sarah.</strong> You completed 4/5 workouts, improved sleep to 7.1 hours, and stayed on nutrition 6/7 days.</p><p><strong>Big win:</strong> Your water intake improved and your progress photos were consistent.</p><p><strong>Next focus:</strong> Weekend consistency and dinner logging.</p><div class="bars" style="height:160px"><span style="height:70%"></span><span style="height:80%"></span><span style="height:92%"></span><span style="height:76%"></span><span style="height:88%"></span></div></div><div class="card"><div class="panelTitle"><h4>Coach Alex’s Focus</h4><span class="pill purple">Trainer note</span></div><p>“Let’s make the weekend easier instead of perfect. Your target is one protein anchor meal, water before dinner, and a quick Sunday reflection.”</p><div class="list"><div class="row"><div><strong>Workouts</strong><small>4 completed out of 5.</small></div><span class="pill yellow">Close</span></div><div class="row"><div><strong>Sleep</strong><small>Average 7.1 hours.</small></div><span class="pill green">Goal</span></div><div class="row"><div><strong>Nutrition</strong><small>92% consistency.</small></div><span class="pill green">Great</span></div></div></div></div>
-    </section>
-
-    <!-- PITCH -->
-    <section id="pitch" class="page">
-      <div class="card hero glow"><div><div class="orb"><b>M</b></div><h1>Maverick Journey</h1><p>The AI middle-man between trainers and clients.</p><div class="quick"><button onclick="go('trainer-home')">Trainer View</button><button onclick="setMode('client');go('client-home')">Client View</button><button onclick="go('trainer-slack')">Slack Demo</button><button onclick="go('trainer-admin')">Tools</button></div></div></div>
-      <div class="grid cols3" style="margin-top:16px"><div class="card"><h3>Problem</h3><p class="muted">Trainers lose client updates across texts, photos, food logs, voice notes, and missed check-ins.</p></div><div class="card"><h3>Solution</h3><p class="muted">Clients log through Slack or portal. AI organizes the data and gives trainers a command center.</p></div><div class="card"><h3>Outcome</h3><p class="muted">Trainers save time, retain clients, manage more people, and look more professional.</p></div></div>
-      <div class="grid cols4" style="margin-top:16px"><div class="card"><h3>Founding</h3><div class="big">$49</div><p class="muted">Up to 20 clients.</p></div><div class="card"><h3>Growth</h3><div class="big">$99</div><p class="muted">Up to 40 clients.</p></div><div class="card"><h3>Pro</h3><div class="big">$179</div><p class="muted">Up to 75 clients.</p></div><div class="card"><h3>Studio</h3><div class="big">$299+</div><p class="muted">Multi-trainer teams.</p></div></div>
-    </section>
-
-    <div class="command"><div class="voice">🎙️</div><input id="ask" placeholder="Ask Maverick Council anything... try 'show me Sarah today'"/><button class="send" onclick="fakeAsk()">Ask AI</button></div>
-  </main>
+<!doctype html><html><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>Maverick Journey | Trainer Dashboard</title><style>
+:root{--bg:#050914;--panel:#0c1428;--panel2:#101c38;--line:#233653;--text:#f4f7ff;--muted:#91a0bf;--blue:#4ea3ff;--cyan:#22e6ff;--purple:#9b5cff;--green:#2be68e;--yellow:#ffd166;--red:#ff5c7c}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at 50% -10%,rgba(78,163,255,.26),transparent 36%),radial-gradient(circle at 85% 10%,rgba(155,92,255,.18),transparent 28%),linear-gradient(180deg,#050914,#030611);color:var(--text)}
+a{color:inherit;text-decoration:none}button,input,textarea{font:inherit}.app{display:grid;grid-template-columns:280px 1fr;min-height:100vh}.side{position:sticky;top:0;height:100vh;padding:22px 16px;border-right:1px solid rgba(126,160,255,.18);background:rgba(3,6,14,.82);backdrop-filter:blur(20px)}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#102a66,#1b123b);border:1px solid rgba(78,163,255,.5);box-shadow:0 0 24px rgba(78,163,255,.35);font-weight:950;color:#cbeeff;font-size:25px;letter-spacing:-5px;padding-right:4px}.brand h1{margin:0;font-size:16px;letter-spacing:.09em;text-transform:uppercase}.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}.nav{display:flex;flex-direction:column;gap:8px}.nav a{display:flex;align-items:center;gap:10px;border:1px solid transparent;border-radius:13px;padding:12px;color:#cbd7f1}.nav a:hover,.nav a.active{background:linear-gradient(90deg,rgba(78,163,255,.2),rgba(155,92,255,.1));border-color:rgba(126,160,255,.32);color:#fff}.badge{margin-left:auto;border-radius:99px;padding:2px 7px;font-size:11px;border:1px solid rgba(155,92,255,.45);color:#d9c8ff;background:rgba(155,92,255,.18)}.sideCard{position:absolute;left:16px;right:16px;bottom:18px;border:1px solid rgba(126,160,255,.2);background:linear-gradient(180deg,rgba(15,26,52,.92),rgba(7,12,24,.92));border-radius:17px;padding:14px}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#f0b36e,#6b3d22);font-weight:900}.sideCoach{display:flex;align-items:center;gap:10px}.sideCoach small,.muted{color:var(--muted)}main{padding:24px 24px 40px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.top h2{margin:0;font-size:25px;letter-spacing:-.03em}.top p{margin:5px 0 0;color:var(--muted)}.search{width:330px;background:rgba(8,14,28,.88);border:1px solid rgba(126,160,255,.24);border-radius:13px;color:#fff;padding:12px 14px;outline:none}.icon{width:43px;height:43px;border-radius:13px;border:1px solid rgba(126,160,255,.24);background:#0a1428;color:#dce8ff}.grid{display:grid;gap:16px}.cols2{grid-template-columns:1.08fr .92fr}.cols3{grid-template-columns:repeat(3,1fr)}.cols4{grid-template-columns:repeat(4,1fr)}.cols5{grid-template-columns:repeat(5,1fr)}.card{border:1px solid rgba(126,160,255,.2);background:linear-gradient(180deg,rgba(13,23,46,.94),rgba(7,12,25,.94));border-radius:18px;padding:16px;box-shadow:0 20px 70px rgba(0,0,0,.22)}.glow{box-shadow:0 0 0 1px rgba(78,163,255,.12),0 0 60px rgba(78,163,255,.12)}.panelTitle{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.panelTitle h3,.panelTitle h4{margin:0;text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:#d7e4ff}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:4px 8px;border:1px solid rgba(126,160,255,.25);background:#101b33;color:#d9e5ff;font-size:11px}.green{border-color:rgba(43,230,142,.45);color:#9effcd}.red{border-color:rgba(255,92,124,.45);color:#ff9aac}.yellow{border-color:rgba(255,209,102,.45);color:#ffe3a3}.purple{border-color:rgba(155,92,255,.45);color:#dbc8ff}.blue{border-color:rgba(78,163,255,.45);color:#bfe3ff}.metric{min-height:116px;position:relative;overflow:hidden}.metric:after{content:"";position:absolute;right:-35px;top:-45px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(78,163,255,.25),transparent 70%)}.label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}.num,.big{font-size:36px;font-weight:950;letter-spacing:-.05em;margin-top:8px}.delta{font-size:12px;color:var(--green);margin-left:6px}.delta.redtxt{color:var(--red)}.delta.yellowtxt{color:var(--yellow)}.bars{display:flex;align-items:flex-end;gap:6px;height:54px;margin-top:12px}.bars span{flex:1;min-height:10px;border-radius:7px 7px 0 0;background:linear-gradient(180deg,var(--blue),rgba(155,92,255,.72))}.list{display:flex;flex-direction:column;gap:10px}.row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:11px;border:1px solid rgba(126,160,255,.12);background:rgba(255,255,255,.025);border-radius:13px}.row strong{font-size:13px}.row small{display:block;color:var(--muted);margin-top:3px}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:12px 10px;border-bottom:1px solid rgba(126,160,255,.12);text-align:left;font-size:13px}.table th{text-transform:uppercase;color:var(--muted);letter-spacing:.1em;font-size:11px}.clientTop{display:flex;align-items:center;gap:10px}.clientAvatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,#21345f,#10182f);border:1px solid rgba(78,163,255,.28)}.progress{height:7px;background:#16243c;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--cyan))}.progress.redbar span{background:linear-gradient(90deg,var(--red),#ffa6b6)}.progress.yellowbar span{background:linear-gradient(90deg,var(--yellow),#ff9f43)}.hero{min-height:410px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}.hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(78,163,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(78,163,255,.055) 1px,transparent 1px);background-size:30px 30px;mask-image:radial-gradient(circle at center,black 0%,transparent 70%)}.orb{position:relative;margin:auto;width:190px;height:190px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(78,163,255,.45);background:radial-gradient(circle,rgba(78,163,255,.78),rgba(17,36,83,.5) 42%,transparent 68%);box-shadow:0 0 80px rgba(78,163,255,.48), inset 0 0 45px rgba(33,230,255,.2)}.orb:before,.orb:after{content:"";position:absolute;inset:-25px;border-radius:50%;border:1px solid rgba(33,230,255,.34);animation:spin 18s linear infinite}.orb:after{inset:-47px;border-color:rgba(155,92,255,.26);animation-duration:28s}@keyframes spin{to{transform:rotate(360deg)}}.orb b{font-size:60px;letter-spacing:-8px}.quick{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px}.quick a,.quick button{border:1px solid rgba(78,163,255,.28);background:#10203d;color:#e8f2ff;border-radius:13px;padding:12px 14px;cursor:pointer}.timeline{position:relative;padding-left:22px}.timeline:before{content:"";position:absolute;left:7px;top:5px;bottom:5px;width:1px;background:rgba(126,160,255,.2)}.event{position:relative;margin:0 0 14px}.event:before{content:"";position:absolute;left:-20px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 12px var(--blue)}.phoneWrap{display:grid;place-items:center}.phone{width:342px;height:700px;border:9px solid #111;border-radius:44px;background:linear-gradient(180deg,#071126,#030712);box-shadow:0 30px 90px rgba(0,0,0,.65),0 0 0 1px #333 inset;padding:18px;overflow:hidden}.phoneTop{display:flex;justify-content:space-between;margin-bottom:10px}.phoneTitle{border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);padding:10px 0;margin-bottom:8px}.chatMsg{display:flex;gap:8px;margin:9px 0}.bubble{font-size:12.5px;line-height:1.35;border:1px solid rgba(126,160,255,.18);background:#111b32;border-radius:14px;padding:10px}.bubble.ai{background:linear-gradient(180deg,#10234a,#0b1832);border-color:rgba(78,163,255,.36)}.bubble.user{background:#18223b}.slackActions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.slackActions button{border:1px solid rgba(155,92,255,.35);background:#0e1730;color:#dfe9ff;border-radius:10px;padding:8px 4px;font-size:10.5px}.uploadBox{min-height:170px;display:grid;place-items:center;text-align:center;border-style:dashed;background:rgba(255,255,255,.018)}.foodPhoto{height:118px;border-radius:14px;background:linear-gradient(135deg,#5d3d1b,#1b392b 45%,#d6d2a7);border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;color:#fff;text-shadow:0 2px 8px #000}.photoSlot{height:190px;border-radius:15px;background:linear-gradient(135deg,#1a294a,#0c1328);border:1px solid rgba(126,160,255,.16);display:grid;place-items:center;text-align:center}
+@media(max-width:1250px){.app{grid-template-columns:1fr}.side{position:relative;height:auto}.sideCard{position:static;margin-top:20px}.cols2,.cols3,.cols4,.cols5{grid-template-columns:1fr}.search{width:180px}}
+</style></head><body><div class="app">
+<aside class="side">
+  <div class="brand"><div class="logo">M</div><div><h1>Maverick Journey</h1><p>Trainer Dashboard</p></div></div>
+  <nav class="nav">
+    <a class="active" href="/">⌂ Trainer Dashboard</a>
+    <a href="/slack/"># Slack Demo <span class="badge">Live</span></a>
+    <a href="/client/">◍ Client Dashboard</a>
+  </nav>
+  <div class="sideCard"><div class="sideCoach"><div class="avatar">A</div><div><strong>Coach Alex</strong><br><small>Maverick Performance</small></div></div><p class="muted">10 clients · Pro Beta Demo</p></div>
+</aside>
+<main>
+<div class="top"><div><h2>Trainer Command Center</h2><p>The main dashboard for trainers managing 10 clients, reminders, alerts, reports, and AI memory.</p></div><input class="search" placeholder="Search clients, logs, notes..."/></div>
+<div class="grid" style="grid-template-columns:260px 1fr 330px">
+  <div class="grid">
+    <div class="card metric"><div class="label">Active Clients</div><div class="num">10 <span class="delta">demo</span></div><div class="bars"><span style="height:35%"></span><span style="height:60%"></span><span style="height:75%"></span><span style="height:68%"></span></div></div>
+    <div class="card metric"><div class="label">Check-ins Today</div><div class="num">7 <span class="delta">+18%</span></div><div class="bars"><span style="height:45%"></span><span style="height:54%"></span><span style="height:65%"></span><span style="height:82%"></span></div></div>
+    <div class="card metric"><div class="label">At Risk</div><div class="num">3 <span class="delta redtxt">action</span></div><div class="bars"><span style="height:22%"></span><span style="height:55%"></span><span style="height:38%"></span><span style="height:68%"></span></div></div>
+    <div class="card metric"><div class="label">Reminders Due</div><div class="num">18 <span class="delta yellowtxt">24h</span></div><div class="bars"><span style="height:50%"></span><span style="height:35%"></span><span style="height:72%"></span><span style="height:61%"></span></div></div>
+  </div>
+  <div class="card hero glow"><div><div class="orb"><b>M</b></div><h1>Maverick Journey Coach OS</h1><p>Clients talk through Slack. AI organizes. Trainers coach from one command center.</p><div class="quick"><a href="/slack/">Show Slack workflow</a><a href="/client/">Show client dashboard</a><button onclick="alert('Maverick AI: Mike, Jessica, Anthony, and David need attention today. Drafts are ready for approval.')">Ask AI who needs attention</button></div></div></div>
+  <div class="grid">
+    <div class="card"><div class="panelTitle"><h4>Priority Alerts</h4><span class="pill red">4</span></div><div class="list">
+      <div class="row"><div><strong>Mike T. low sleep</strong><small>5.2h average · 3 days</small></div><span class="pill red">High</span></div>
+      <div class="row"><div><strong>Jessica missed check-ins</strong><small>2 days without response</small></div><span class="pill yellow">Risk</span></div>
+      <div class="row"><div><strong>Anthony knee soreness</strong><small>Workout adjustment suggested</small></div><span class="pill red">Flag</span></div>
+      <div class="row"><div><strong>Sarah progress photo due</strong><small>Friday morning reminder ready</small></div><span class="pill">Due</span></div>
+    </div></div>
+    <div class="card"><div class="panelTitle"><h4>AI Drafts Ready</h4><span class="pill purple">4</span></div><div class="list">
+      <div class="row"><div><strong>Reset message</strong><small>Jessica · soft accountability</small></div><span class="pill purple">Approve</span></div>
+      <div class="row"><div><strong>Recovery check</strong><small>Mike · direct tone</small></div><span class="pill purple">Approve</span></div>
+      <div class="row"><div><strong>Celebrate streak</strong><small>Chris · 5-day check-in streak</small></div><span class="pill green">Send</span></div>
+    </div></div>
+  </div>
 </div>
-<script>
-const pageMeta={
-"trainer-home":["Good morning, Coach 👋","Your AI command center is tracking 10 clients, 18 reminders, and 4 messages waiting for approval."],
-"trainer-clients":["10-Client Management","See every client, risk level, momentum score, latest signal, and recommended action."],
-"trainer-profile":["Trainer Client Profile","A trainer-only view of progress, meals, photos, risks, notes, memory, and AI coaching brief."],
-"trainer-ai":["Maverick Council AI Assistant","Ask questions, draft messages, set reminders, find risks, and summarize client history."],
-"trainer-slack":["Slack Command Layer","Show exactly how trainers and clients use Maverick Journey through Slack."],
-"trainer-reports":["Trainer Reports","Weekly client reports, retention risks, wins, and trainer-only insights."],
-"trainer-reminders":["Reminder Engine","Automated check-ins, food reminders, progress photos, hydration, and missed-client resets."],
-"trainer-admin":["Tools + Admin","Slack, Claude, Supabase, Stripe, AI tone, approval settings, and client data types."],
-"pitch":["Pitch Flow","Walk trainers through the problem, solution, demo, and pricing."],
-"client-home":["Welcome back, Sarah","The client sees progress, reminders, uploads, nutrition, encouragement, and their journey."],
-"client-log":["Log Today","Client logs weight, sleep, water, mood, workouts, meals, photos, and notes."],
-"client-nutrition":["Nutrition Dashboard","Clients can see calories, protein, consistency, meal photos, and simple AI notes."],
-"client-photos":["Progress Photos","Clients upload consistent photos and see their visual journey over time."],
-"client-messages":["Client Messages","Clients talk to the AI like texting their trainer, with trainer visibility and control."],
-"client-reminders":["My Reminders","Client-facing tasks that keep them accountable and connected."],
-"client-report":["My Weekly Report","A simple, motivating weekly summary clients can understand and act on."]
-};
-function go(id){
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
- document.getElementById('title').textContent=pageMeta[id][0];
- document.getElementById('subtitle').textContent=pageMeta[id][1];
- window.scrollTo({top:0,behavior:'smooth'});
-}
-document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.page));
-function setMode(mode){
- document.querySelectorAll('.roleSwitch button').forEach((b,i)=>b.classList.toggle('active',(mode==='trainer'&&i===0)||(mode==='client'&&i===1)));
- document.querySelector('.trainerNav').style.display=mode==='trainer'?'flex':'none';
- document.querySelector('.clientNav').style.display=mode==='client'?'flex':'none';
- document.querySelector('.clientNavTitle').style.display=mode==='client'?'block':'none';
- document.querySelector('.navTitle').style.display=mode==='trainer'?'block':'none';
- document.getElementById('sideName').textContent=mode==='trainer'?'Coach Alex':'Sarah Kim';
- document.getElementById('sideSub').textContent=mode==='trainer'?'Maverick Performance':'Client Dashboard';
- document.getElementById('sideUsage').textContent=mode==='trainer'?'10 clients · Pro Beta Demo':'Week 6 / 12 · On track';
- if(mode==='client') go('client-home'); else go('trainer-home');
-}
-const clients=[
- ["Sarah Kim","On track","Weight loss","86","green","Checked in today"],
- ["Mike Thompson","At risk","Muscle gain","54","red","Low sleep 3 days"],
- ["Jessica Lee","Needs reset","Lifestyle","42","yellow","Missed 2 check-ins"],
- ["David Rodriguez","Hydration","Fat loss","63","yellow","Water below goal"],
- ["Chris Johnson","Strong week","Strength","91","green","5-day streak"],
- ["Brianna Cole","On track","Wellness","84","green","Photos uploaded"],
- ["Anthony Vega","Injury note","Performance","67","red","Knee soreness"],
- ["Emily Stone","Travel mode","Cutting","74","purple","Travel week"],
- ["Jordan Blake","New client","Transformation","58","yellow","Onboarding"],
- ["Taylor Reed","Celebration","Maintenance","94","green","Goal hit"]
-];
-const grid=document.getElementById('clientGrid');
-grid.innerHTML=clients.map(c=>`<div class="card clientCard" onclick="go('trainer-profile')"><div class="clientTop"><div class="clientAvatar">${c[0][0]}</div><div><strong>${c[0]}</strong><br><small class="muted">${c[2]}</small></div><span class="dot ${c[4]=='green'?'':c[4]}"></span></div><br><div class="progress ${c[4]=='red'?'red':c[4]=='yellow'?'yellow':''}"><span style="width:${c[3]}%"></span></div><p><strong>${c[3]}%</strong> momentum</p><small class="muted">${c[5]}</small><br><br><span class="pill ${c[4]}">${c[1]}</span></div>`).join('');
-document.getElementById('clientTable').innerHTML='<thead><tr><th>Client</th><th>Status</th><th>Goal</th><th>Momentum</th><th>Latest Signal</th><th>Action</th></tr></thead><tbody>'+clients.map(c=>`<tr><td>${c[0]}</td><td><span class="pill ${c[4]}">${c[1]}</span></td><td>${c[2]}</td><td>${c[3]}%</td><td>${c[5]}</td><td><span class="pill purple">Review</span></td></tr>`).join('')+'</tbody>';
-function fakeAsk(){
- const q=document.getElementById('ask').value||"Who needs attention today?";
- alert("Maverick Journey AI\\n\\nQuestion: "+q+"\\n\\nPriority summary: Mike has low sleep, Jessica missed check-ins, Anthony reported knee soreness, and David is below water goal. I drafted follow-up messages and can send them through Slack after trainer approval.");
- document.getElementById('ask').value="";
-}
-</script>
-</body>
-</html>
+<div class="grid cols4" style="margin-top:16px">
+  <div class="card"><div class="panelTitle"><h4>Compliance</h4><span class="pill green">87%</span></div><div class="big">87%</div><div class="bars"><span style="height:60%"></span><span style="height:72%"></span><span style="height:80%"></span><span style="height:92%"></span></div></div>
+  <div class="card"><div class="panelTitle"><h4>Avg Weight Loss</h4><span class="pill green">30 days</span></div><div class="big">-8.4</div><p class="muted">Total across active weight-loss clients.</p></div>
+  <div class="card"><div class="panelTitle"><h4>Client Momentum</h4><span class="pill">Score</span></div><div class="big">78</div><p class="muted">Check-ins, sleep, meals, water, workouts.</p></div>
+  <div class="card"><div class="panelTitle"><h4>Retention Risk</h4><span class="pill red">3</span></div><div class="big">3</div><p class="muted">Clients likely to fall off without follow-up.</p></div>
+</div>
+<div class="grid cols2" style="margin-top:16px">
+  <div class="card"><div class="panelTitle"><h4>10-Client Roster</h4><span class="pill blue">Trainer view</span></div><table class="table"><thead><tr><th>Client</th><th>Status</th><th>Goal</th><th>Momentum</th><th>Signal</th></tr></thead><tbody>
+    <tr><td>Sarah Kim</td><td><span class="pill green">On track</span></td><td>Weight loss</td><td>86%</td><td>Checked in today</td></tr>
+    <tr><td>Mike Thompson</td><td><span class="pill red">At risk</span></td><td>Muscle gain</td><td>54%</td><td>Low sleep 3 days</td></tr>
+    <tr><td>Jessica Lee</td><td><span class="pill yellow">Needs reset</span></td><td>Lifestyle</td><td>42%</td><td>Missed 2 check-ins</td></tr>
+    <tr><td>David Rodriguez</td><td><span class="pill yellow">Hydration</span></td><td>Fat loss</td><td>63%</td><td>Water below goal</td></tr>
+    <tr><td>Chris Johnson</td><td><span class="pill green">Strong week</span></td><td>Strength</td><td>91%</td><td>5-day streak</td></tr>
+    <tr><td>Brianna Cole</td><td><span class="pill green">On track</span></td><td>Wellness</td><td>84%</td><td>Photos uploaded</td></tr>
+    <tr><td>Anthony Vega</td><td><span class="pill red">Injury note</span></td><td>Performance</td><td>67%</td><td>Knee soreness</td></tr>
+    <tr><td>Emily Stone</td><td><span class="pill purple">Travel mode</span></td><td>Cutting</td><td>74%</td><td>Travel week</td></tr>
+    <tr><td>Jordan Blake</td><td><span class="pill yellow">New client</span></td><td>Transformation</td><td>58%</td><td>Onboarding</td></tr>
+    <tr><td>Taylor Reed</td><td><span class="pill green">Celebration</span></td><td>Maintenance</td><td>94%</td><td>Goal hit</td></tr>
+  </tbody></table></div>
+  <div class="card"><div class="panelTitle"><h4>Trainer AI Memory</h4><span class="pill purple">Personalized</span></div><div class="list">
+    <div class="row"><div><strong>Sarah falls off on weekends.</strong><small>Compliance drops 32% on Sat/Sun. Friday reminder helps.</small></div></div>
+    <div class="row"><div><strong>Mike responds to direct tone.</strong><small>Short action-based messages get fastest response.</small></div></div>
+    <div class="row"><div><strong>Jessica needs encouragement, not pressure.</strong><small>Soft reset language improves check-in completion.</small></div></div>
+    <div class="row"><div><strong>Chris likes performance-based wins.</strong><small>Highlight strength and streaks, not just weight.</small></div></div>
+  </div></div>
+</div>
+</main></div></body></html>
